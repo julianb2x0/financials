@@ -8,12 +8,8 @@ import { getAttachmentDescription } from "@/lib/attachment-descriptions"
 import { motion } from "framer-motion"
 import { RefreshCw, Download } from "lucide-react"
 import { RelationshipRadarChart } from "@/components/relationship-radar-chart"
-import dynamic from "next/dynamic"
-
-// Dynamically import jsPDF to avoid SSR issues
-const DynamicPDFGenerator = dynamic(() => import("@/lib/generate-pdf").then((mod) => ({ default: mod.generatePDF })), {
-  ssr: false,
-})
+import { generatePDF } from "@/lib/generate-pdf"
+import { toast } from "@/components/ui/use-toast"
 
 interface ResultsProps {
   results: {
@@ -64,20 +60,36 @@ export function QuizResults({ results, answers }: ResultsProps) {
     try {
       setIsGeneratingPDF(true)
 
-      // Small delay to allow the UI to update
-      await new Promise((resolve) => setTimeout(resolve, 100))
-
-      // Generate and download the PDF
-      await DynamicPDFGenerator({
+      // Call the PDF generation function
+      const success = await generatePDF({
         answers,
         results,
       })
 
-      setIsGeneratingPDF(false)
+      if (success) {
+        toast({
+          title: "PDF Generated Successfully",
+          description: "Your assessment results have been saved as a PDF.",
+          duration: 5000,
+        })
+      } else {
+        toast({
+          title: "PDF Generation Failed",
+          description: "There was an error creating your PDF. Please try again.",
+          variant: "destructive",
+          duration: 5000,
+        })
+      }
     } catch (error) {
-      console.error("Error generating PDF:", error)
+      console.error("Error in PDF generation:", error)
+      toast({
+        title: "PDF Generation Failed",
+        description: "There was an error creating your PDF. Please try again.",
+        variant: "destructive",
+        duration: 5000,
+      })
+    } finally {
       setIsGeneratingPDF(false)
-      alert("There was an error generating your PDF. Please try again.")
     }
   }
 

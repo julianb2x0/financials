@@ -59,8 +59,9 @@
     "vaul": "^0.9.6",
     "zod": "^3.24.1",
     "@emotion/is-prop-valid": "latest",
+    "jspdf": "latest",
     "framer-motion": "latest",
-    "jspdf": "latest"
+    "jspdf-autotable": "latest"
   },
   "devDependencies": {
     "@types/node": "^22",
