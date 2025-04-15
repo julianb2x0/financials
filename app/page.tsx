@@ -15,7 +15,7 @@ export default function Home() {
               ATTACHMENT INSIGHT ASSESSMENT
             </h1>
             <div className="mx-auto mb-2 h-px w-24 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
-            <p className="mx-auto max-w-2xl text-center font-sans text-sm text-white/80 md:text-base">
+            <p className="mx-auto max-w-2xl text-center font-sans text-xs text-white/80 md:text-sm">
               DISCOVER YOUR RELATIONAL FRAMEWORK ACROSS DIFFERENT RELATIONSHIP CONTEXTS
             </p>
           </div>
